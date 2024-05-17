@@ -18,6 +18,11 @@
                     <x-nav-link href="/videos/1">
                         {{ __('Videos 1') }}
                     </x-nav-link>
+                    @can('videos_manage_index')
+                    <x-nav-link href="/manage/videos" :active="request()->routeIs('manage.videos')">
+                        {{ __('Manage Videos') }}
+                    </x-nav-link>
+                    @endcan
                 </div>
             </div>
 
@@ -162,6 +167,11 @@
             <x-responsive-nav-link href="/videos/1">
                 {{ __('Videos 1') }}
             </x-responsive-nav-link>
+            @can('videos_manage_index')
+            <x-responsive-nav-link href="/manage/videos" :active="request()->routeIs('manage.videos')">
+                {{ __('Manage Videos') }}
+            </x-responsive-nav-link>
+            @endcan
         </div>
 
         @if(Auth::check())
