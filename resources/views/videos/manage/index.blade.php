@@ -1,5 +1,16 @@
 <x-casteaching-layout>
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+        @can('videos_manage_create')
+        <form data-qa="form_video_create" action="" method="POST">
+            <label for="title">Title</label>
+            <input id="title" name="title" type="text">
+            <label for="description">Description</label>
+            <textarea name="description" id="description" cols="30" rows="10"></textarea>
+            <label for="url">URL</label>
+            <input id="url" name="url" type="text">
+            <button>Crear</button>
+        </form>
+        @endcan
         <div
             class="block rounded-lg bg-white p-6 text-surface shadow-secondary-1 dark:bg-surface-dark dark:text-white">
             <h5 class="mb-2 text-xl font-medium leading-tight">Videos</h5>
