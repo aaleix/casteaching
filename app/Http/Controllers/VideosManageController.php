@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Video;
 use Illuminate\Http\Request;
 
 class VideosManageController extends Controller
@@ -12,7 +13,9 @@ class VideosManageController extends Controller
     public function index()
     {
         //
-        return view('videos.manage.index');
+        return view('videos.manage.index', [
+            'videos' => Video::all()
+        ]);
     }
 
     /**
