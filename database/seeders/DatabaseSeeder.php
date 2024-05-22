@@ -30,6 +30,7 @@ class DatabaseSeeder extends Seeder
 
         create_permissions();
 
+        create_users_manager_user();
 
     }
 }

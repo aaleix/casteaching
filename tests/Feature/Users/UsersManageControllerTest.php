@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Videos;
+namespace Tests\Feature\Users;
 
 use App\Models\User;
 use App\Models\Video;
@@ -11,34 +11,17 @@ use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Permission;
 use Tests\TestCase;
 
-class VideosManageControllerTest extends TestCase
+class UsersManageControllerTest extends TestCase
 {
     use RefreshDatabase;
 
     /** @test  */
-    public function user_with_permissions_can_store_videos()
+    public function user_with_permissions_can_store_users()
     {
-        $this->loginAsVideoManager();
+        $this->loginAsUserManager();
 
-        $video = objectify([
-            'title' => 'HTTP for noobs',
-            'description' => 'Te ensenyo tot el que se sobre HTTP',
-            'url' => 'http://tubeme.acacha.org/http',
-        ]);
+        $response = $this->post('/manage/users',[]);
 
-        $response = $this->post('/manage/videos', [
-            'title' => 'HTTP for noobs',
-            'description' => 'Te ensenyo tot el que se sobre HTTP',
-            'url' => 'http://tubeme.acacha.org/http',
-        ]);
-
-        //$response->assertStatus(201);
-        $videoDB = Video::first();
-
-        $this->assertNotNull($videoDB);
-        $this->assertEquals($videoDB->title,$video->title);
-        $this->assertEquals($videoDB->description,$video->description);
-        $this->assertEquals($videoDB->url,$video->url);
     }
 
     /** @test  */
@@ -64,17 +47,6 @@ class VideosManageControllerTest extends TestCase
         }
 
 
-    }
-
-    /** @test */
-    public function user_with_permissions_can_see_add_videos()
-    {
-        $this->loginAsVideoManager();
-        $response = $this->get('/manage/videos');
-        $response->assertStatus(200);
-        $response->assertViewIs('videos.manage.index');
-
-        $response->assertSee('<form data-qa="form_video_create"', false);
     }
 
     /** @test */
@@ -138,5 +110,10 @@ class VideosManageControllerTest extends TestCase
     private function loginAsRegularUser(): void
     {
         Auth::login(create_regular_user());
+    }
+
+    private function loginAsUserManager(): void
+    {
+        Auth::login(create_users_manager_user());
     }
 }

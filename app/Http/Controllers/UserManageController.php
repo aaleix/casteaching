@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Video;
+use App\Models\User;
 use Illuminate\Http\Request;
 
-class VideosManageController extends Controller
+class UserManageController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,8 +13,8 @@ class VideosManageController extends Controller
     public function index()
     {
         //
-        return view('videos.manage.index', [
-            'videos' => Video::all()
+        return view('users.manage.index', [
+            'users' => User::all()
         ]);
     }
 
@@ -31,12 +31,7 @@ class VideosManageController extends Controller
      */
     public function store(Request $request)
     {
-        Video::create([
-            'title' => $request->title,
-            'description' => $request->description,
-            'url' => $request->url,
-        ]);
-
+        //
     }
 
     /**
