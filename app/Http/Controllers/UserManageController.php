@@ -21,17 +21,19 @@ class UserManageController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        //
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => $request->password,
+        ]);
+        session()->flash('status', 'Successfully created');
+        return redirect()->route('manage.users');
     }
 
     /**
@@ -63,6 +65,8 @@ class UserManageController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        User::find($id)->delete();
+        session()->flash('status', 'Successfully removed');
+        return redirect()->route('manage.users');
     }
 }

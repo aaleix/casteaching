@@ -20,7 +20,7 @@
                             </div>
                         </div>
                         <div class="mt-3 md:mt-0 md:col-span-2">
-                            <form data-qa="form_user_create" action="#" method="POST" >
+                            <form method="POST" data-qa="form_user_create">
                                 @csrf
                                 <div class="shadow sm:rounded-md sm:overflow-hidden md:bg-white">
                                     <div class="px-4 py-5 space-y-6 sm:p-6">
@@ -118,12 +118,19 @@
                 </td>
                 <td class="px-6 py-4">
                     <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                    <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Delete</a>
+                    <form class="inline" action="/manage/users/{{$user->id}}" method="POST">
+                        @csrf
+                        @method('DELETE')
+
+                        <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                           onclick="event.preventDefault();
+                            this.closest('form').submit();">Delete</a>
+                    </form>
                 </td>
             </tr>
             @endforeach
             </tbody>
         </table>
     </div>
-
+    </div>
 </x-casteaching-layout>

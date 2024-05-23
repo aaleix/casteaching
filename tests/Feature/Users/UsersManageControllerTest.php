@@ -68,7 +68,7 @@ class UsersManageControllerTest extends TestCase
         $response->assertStatus(200);
         $response->assertViewIs('videos.manage.index');
 
-        $response->assertDontSee('<form data-qa="form_video_create"', false);
+        $response->assertDontSee('<form data-qa="form_user_create"', false);
     }
 
     /** @test */

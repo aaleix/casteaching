@@ -31,7 +31,6 @@ class VideosManageController extends Controller
         session()->flash('status', 'Successfully created');
         return redirect()->route('manage.videos');
 
-
     }
 
     /**
