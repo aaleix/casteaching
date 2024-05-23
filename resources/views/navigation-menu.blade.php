@@ -15,17 +15,14 @@
                     <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                    <x-nav-link href="/videos/1">
-                        {{ __('Videos 1') }}
-                    </x-nav-link>
                     @can('videos_manage_index')
                     <x-nav-link href="/manage/videos" :active="request()->routeIs('manage.videos')">
-                        {{ __('Manage Videos') }}
+                        {{ __('Videos') }}
                     </x-nav-link>
                     @endcan
                     @can('users_manage_index')
                         <x-nav-link href="/manage/users" :active="request()->routeIs('manage.users')">
-                            {{ __('Manage Users') }}
+                            {{ __('Users') }}
                         </x-nav-link>
                     @endcan
                 </div>
@@ -33,7 +30,7 @@
 
 
             @if(Auth::check())
-                <div class="hidden sm:flex sm:items-center sm:ms-6">
+                <div class="hidden sm:flex sm:items-center sm:ml-6">
                     <!-- Teams Dropdown -->
                     @if (Laravel\Jetstream\Jetstream::hasTeamFeatures())
                         <div class="ms-3 relative">

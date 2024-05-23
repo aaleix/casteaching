@@ -22,6 +22,7 @@ class UsersManageControllerTest extends TestCase
 
         $response = $this->post('/manage/users',[]);
 
+        $response->assertStatus(405);
     }
 
     /** @test  */

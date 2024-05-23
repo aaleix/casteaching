@@ -15,6 +15,42 @@ class VideosManageControllerTest extends TestCase
 {
     use RefreshDatabase;
 
+    /** @test */
+    public function user_without_permissions_cannot_destroy_videos()
+    {
+        $this->loginAsRegularUser();
+
+        $video = Video::create([
+            'title' => 'zzzzzzzz',
+            'description' => 'Tzzzzzz',
+            'url' => 'test-url',
+        ]);
+
+        $response = $this->delete('/manage/videos/' . $video->id);
+
+        $response->assertStatus(403);
+    }
+
+    /** @test */
+    public function user_with_permissions_can_destroy_videos()
+    {
+        $this->loginAsVideoManager();
+
+        $video = Video::create([
+            'title' => 'zzzzzzzz',
+            'description' => 'Tzzzzzz',
+            'url' => 'test-url',
+        ]);
+
+        $response = $this->delete('/manage/videos/' . $video->id);
+
+        $response->assertRedirect('manage/videos');
+
+        $response->assertSessionHas('status', 'Successfully removed');
+
+        $this->assertNull($video->fresh());
+    }
+
     /** @test  */
     public function user_with_permissions_can_store_videos()
     {
@@ -32,13 +68,17 @@ class VideosManageControllerTest extends TestCase
             'url' => 'http://tubeme.acacha.org/http',
         ]);
 
-        //$response->assertStatus(201);
+        $response->assertRedirect(route('manage.videos'));
+        $response->assertSessionHas('status', 'Successfully created');
+
         $videoDB = Video::first();
 
         $this->assertNotNull($videoDB);
         $this->assertEquals($videoDB->title,$video->title);
         $this->assertEquals($videoDB->description,$video->description);
         $this->assertEquals($videoDB->url,$video->url);
+        $this->assertNull($videoDB->published_at);
+
     }
 
     /** @test  */

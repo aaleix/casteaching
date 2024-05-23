@@ -19,14 +19,6 @@ class VideosManageController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
@@ -36,6 +28,9 @@ class VideosManageController extends Controller
             'description' => $request->description,
             'url' => $request->url,
         ]);
+        session()->flash('status', 'Successfully created');
+        return redirect()->route('manage.videos');
+
 
     }
 
@@ -68,6 +63,8 @@ class VideosManageController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Video::find($id)->delete();
+        session()->flash('status', 'Successfully removed');
+        return redirect()->route('manage.videos');
     }
 }
