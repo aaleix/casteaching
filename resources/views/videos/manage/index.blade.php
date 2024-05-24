@@ -90,7 +90,7 @@
                 </td>
                 <td class="px-6 py-4">
                     <a href="/videos/{{$video->id}}" target="_blank" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Show</a>
-                    <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                    <a href="/manage/videos/{{$video->id}}" target="_blank" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
                     <form class="inline" action="/manage/videos/{{$video->id}}" method="POST">
                         @csrf
                         @method('DELETE')

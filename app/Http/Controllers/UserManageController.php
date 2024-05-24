@@ -49,7 +49,8 @@ class UserManageController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        return view('users.manage.edit', ['user' => User::findOrFail($id)]);
+
     }
 
     /**
@@ -57,7 +58,13 @@ class UserManageController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $user = User::findOrFail($id);
+        $user->name=$request->name;
+        $user->email=$request->email;
+        $user->password=$request->password;
+        $user->save();
+        session()->flash('status', 'Successfully updated');
+        return redirect()->route('manage.users');
     }
 
     /**

@@ -51,7 +51,7 @@ class UsersManageControllerTest extends TestCase
     }
 
     /** @test */
-    public function user_without_videos_manage_create_cannot_see_add_videos()
+    public function user_without_users_manage_create_cannot_see_add_users()
     {
         Permission::firstOrCreate(['name'=>'videos_manage_index']);
 
