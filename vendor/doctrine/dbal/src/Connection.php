@@ -37,6 +37,7 @@ use function assert;
 use function count;
 use function get_class;
 use function implode;
+use function is_array;
 use function is_int;
 use function is_string;
 use function key;
@@ -1137,6 +1138,10 @@ class Connection
 
         if ($item->isHit()) {
             $value = $item->get();
+            if (! is_array($value)) {
+                $value = [];
+            }
+
             if (isset($value[$realKey])) {
                 return new Result(new ArrayResult($value[$realKey]), $this);
             }
@@ -1312,10 +1317,6 @@ class Connection
             throw ConnectionException::mayNotAlterNestedTransactionWithSavepointsInTransaction();
         }
 
-        if (! $this->getDatabasePlatform()->supportsSavepoints()) {
-            throw ConnectionException::savepointsNotSupported();
-        }
-
         $this->nestTransactionsWithSavepoints = (bool) $nestTransactionsWithSavepoints;
     }
 
@@ -1336,7 +1337,7 @@ class Connection
      */
     protected function _getNestedTransactionSavePointName()
     {
-        return 'DOCTRINE2_SAVEPOINT_' . $this->transactionNestingLevel;
+        return 'DOCTRINE_' . $this->transactionNestingLevel;
     }
 
     /**
