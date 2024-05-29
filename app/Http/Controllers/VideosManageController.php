@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\VideoCreated;
 use App\Models\Video;
 use Illuminate\Http\Request;
+use Tests\Feature\Videos\VideosManageControllerTest;
+use Illuminate\Support\Facades\Redis;
 
 class VideosManageController extends Controller
 {
@@ -23,14 +26,18 @@ class VideosManageController extends Controller
      */
     public function store(Request $request)
     {
-        Video::create([
+        $video = Video::create([
             'title' => $request->title,
             'description' => $request->description,
             'url' => $request->url,
         ]);
         session()->flash('status', 'Successfully created');
-        return redirect()->route('manage.videos');
 
+        VideoCreated::dispatch($video);
+
+
+
+        return redirect()->route('manage.videos');
     }
 
     /**

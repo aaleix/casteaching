@@ -20,7 +20,7 @@ class TermsOfServiceController extends Controller
     {
         $termsFile = Jetstream::localizedMarkdownPath('terms.md');
 
-        return Inertia::render('terms', [
+        return Inertia::render('TermsOfService', [
             'terms' => Str::markdown(file_get_contents($termsFile)),
         ]);
     }
