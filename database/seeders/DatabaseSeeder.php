@@ -32,5 +32,7 @@ class DatabaseSeeder extends Seeder
 
         create_users_manager_user();
 
+        create_sample_series();
+
     }
 }
