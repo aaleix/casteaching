@@ -20,7 +20,7 @@
                             </div>
                         </div>
                         <div class="mt-3 md:mt-0 md:col-span-2">
-                            <form method="POST" data-qa="form_user_create">
+                            <form data-qa="form_user_create" method="POST">
                                 @csrf
                                 <div class="shadow sm:rounded-md sm:overflow-hidden md:bg-white">
                                     <div class="px-4 py-5 space-y-6 sm:p-6">

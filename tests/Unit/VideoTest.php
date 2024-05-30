@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\Models\Serie;
 use App\Models\Video;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -29,6 +30,33 @@ class VideoTest extends TestCase
 
         $this->assertEquals($dateToTest, '13 de desembre de 2020');
 
+
+    }
+
+    /**
+     * @test
+     */
+    public function video_have_serie()
+    {
+        $video = Video::create([
+            'title' => 'TDD 101',
+            'description' => 'Bla bla bla',
+            'url' => 'https://youtu.be/w8j07_DBl_I',
+        ]);
+
+        $this->assertNull($video->serie);
+
+        $serie = Serie::create([
+            'title' => 'Apren TDD',
+            'description' => 'Bla bla bla',
+            'image' => 'tdd.png',
+            'teacher_name' => 'Sergi Tur Badenas',
+            'teacher_photo_url' => 'https://www.gravatar.com/avatar/' . md5('sergiturbadenas@gmail.com'),
+        ]);
+
+        $video->setSerie($serie);
+
+        $this->assertNotNull($video->fresh()->serie);
 
     }
 }
