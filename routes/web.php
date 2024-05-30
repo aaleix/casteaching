@@ -3,7 +3,12 @@
 use App\Http\Controllers\UserManageController;
 use App\Http\Controllers\VideosController;
 use App\Http\Controllers\VideosManageController;
-use App\Models\Video;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
+use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -50,3 +55,8 @@ Route::middleware(['auth:sanctum','verified'])->group(function () {
     Route::get('manage/users', [ UserManageController::class,'index'])->middleware(['can:users_manage_index'])
         ->name('manage.users');
 });
+
+Route::get('/auth/redirect', [\App\Http\Controllers\GithubAuthController::class, 'redirect']);
+Route::get('/auth/callback', [\App\Http\Controllers\GithubAuthController::class, 'callback']);
+
+

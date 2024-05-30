@@ -44,5 +44,10 @@
                 </x-button>
             </div>
         </form>
+        <a href="/auth/redirect">
+            <x-button class="ml-4" >
+                {{ __('Github') }}
+            </x-button>
+        </a>
     </x-authentication-card>
 </x-guest-layout>
