@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SeriesManageController;
 use App\Http\Controllers\UserManageController;
 use App\Http\Controllers\VideosController;
 use App\Http\Controllers\VideosManageController;
@@ -55,6 +56,16 @@ Route::middleware(['auth:sanctum','verified'])->group(function () {
     Route::get('manage/users', [ UserManageController::class,'index'])->middleware(['can:users_manage_index'])
         ->name('manage.users');
 });
+
+Route::get('/manage/series', [ SeriesManageController::class,'index'])->middleware(['can:series_manage_index'])
+    ->name('manage.series');
+
+Route::post('/manage/series',[ SeriesManageController::class,'store' ])->middleware(['can:series_manage_store']);
+Route::delete('/manage/series/{id}',[ SeriesManageController::class,'destroy' ])->middleware(['can:series_manage_destroy']);
+Route::get('/manage/series/{id}',[ SeriesManageController::class,'edit' ])->middleware(['can:series_manage_edit']);
+Route::put('/manage/series/{id}',[ SeriesManageController::class,'update' ])->middleware(['can:series_manage_update']);
+
+//Route::put('/manage/series/{id}/image',[ SeriesImagesManageController::class,'update' ])->middleware(['can:series_manage_update']);
 
 Route::get('/auth/redirect', [\App\Http\Controllers\GithubAuthController::class, 'redirect']);
 Route::get('/auth/callback', [\App\Http\Controllers\GithubAuthController::class, 'callback']);

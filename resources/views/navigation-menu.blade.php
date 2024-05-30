@@ -25,6 +25,11 @@
                             {{ __('Users') }}
                         </x-nav-link>
                     @endcan
+                    @can('series_manage_index')
+                        <x-nav-link href="/manage/series" :active="request()->routeIs('manage.series')">
+                            {{ __('Series') }}
+                        </x-nav-link>
+                    @endcan
                 </div>
             </div>
 
