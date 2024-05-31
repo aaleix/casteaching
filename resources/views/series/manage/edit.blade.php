@@ -67,7 +67,7 @@
                 </div>
 
                 <x-section-border/>
-                <x-form-section submit="updateProfileInformation">
+                <x-form-section submit="/manage/series/{{$serie->id}}/image">
                     <x-slot name="title">
                         {{ __('Imatge de la serie') }}
                     </x-slot>
@@ -81,6 +81,8 @@
                     </x-slot>
 
                     <x-slot name="actions">
+                        @csrf
+                        @method('PUT')
                         <x-button>
                             {{ __('Save') }}
                         </x-button>

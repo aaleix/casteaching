@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SeriesImagesManageController;
 use App\Http\Controllers\SeriesManageController;
 use App\Http\Controllers\UserManageController;
 use App\Http\Controllers\VideosController;
@@ -65,7 +66,7 @@ Route::delete('/manage/series/{id}',[ SeriesManageController::class,'destroy' ])
 Route::get('/manage/series/{id}',[ SeriesManageController::class,'edit' ])->middleware(['can:series_manage_edit']);
 Route::put('/manage/series/{id}',[ SeriesManageController::class,'update' ])->middleware(['can:series_manage_update']);
 
-//Route::put('/manage/series/{id}/image',[ SeriesImagesManageController::class,'update' ])->middleware(['can:series_manage_update']);
+Route::put('/manage/series/{id}/image',[ SeriesImagesManageController::class,'update' ])->middleware(['can:series_manage_update']);
 
 Route::get('/auth/redirect', [\App\Http\Controllers\GithubAuthController::class, 'redirect']);
 Route::get('/auth/callback', [\App\Http\Controllers\GithubAuthController::class, 'callback']);
