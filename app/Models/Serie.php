@@ -46,14 +46,7 @@ class Serie extends Model
     protected function imageUrl(): Attribute
     {
         return new Attribute(
-            get: fn ($value) => $this->image ?? 'series/placeholder.png',
-        );
-    }
-
-    protected function url(): Attribute
-    {
-        return new Attribute(
-            get: fn ($value) => count($this->videos) > 0 ? '/videos/' . $this->videos->first()->id : '#'
+            get: fn ($value) => $this->image ? 'series/placeholder.png': $this->image,
         );
     }
 }

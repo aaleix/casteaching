@@ -13,6 +13,8 @@ class DatabaseSeeder extends Seeder
 {
     /**
      * Seed the application's database.
+     *
+     * @return void
      */
     public function run(): void
     {
@@ -24,15 +26,16 @@ class DatabaseSeeder extends Seeder
 
         create_video_manager_user();
 
+        create_user_manager_user();
+
         create_default_videos();
 
         create_sample_videos();
 
         create_permissions();
 
-        create_users_manager_user();
-
         create_sample_series();
 
+        create_placeholder_series_image();
     }
 }
