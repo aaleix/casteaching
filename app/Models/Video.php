@@ -44,4 +44,5 @@ class Video extends Model
         $this->save();
         return $this;
     }
+
 }

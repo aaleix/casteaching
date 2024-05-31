@@ -16,9 +16,9 @@
                         <div class="md:grid md:grid-cols-3 md:gap-6 bg-white md:bg-transparent">
                             <div class="md:col-span-1">
                                 <div class="px-4 py-4 sm:px-6 md:px-4">
-                                    <h3 class="text-lg font-medium leading-6 text-gray-900">Vídeos</h3>
+                                    <h3 class="text-lg font-medium leading-6 text-gray-900">Series</h3>
                                     <p class="mt-1 text-sm text-gray-600">
-                                        Informació bàsica del vídeo
+                                        Informació bàsica de la serie
                                     </p>
                                 </div>
                             </div>
@@ -37,7 +37,7 @@
                                                     <input required type="text" id="title" name="title" rows="3" class="shadow-sm mt-1 block w-full sm:text-sm border border-gray-300 rounded-md p-2" value="{{ $serie->title }}" ></input>
                                                 </div>
                                                 <p class="mt-2 text-sm text-gray-500">
-                                                    Titol curt del vídeo
+                                                    Titol de la serie
                                                 </p>
                                             </div>
 
@@ -49,7 +49,7 @@
                                                     <textarea required id="description" name="description" rows="3" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md" placeholder="Description">{{ $serie->description }}</textarea>
                                                 </div>
                                                 <p class="mt-2 text-sm text-gray-500">
-                                                    Breu descripció del vídeo
+                                                    Breu descripció de la serie
                                                 </p>
                                             </div>
 
@@ -66,7 +66,29 @@
                     </div>
                 </div>
 
+                <x-section-border/>
+                <x-form-section submit="updateProfileInformation">
+                    <x-slot name="title">
+                        {{ __('Imatge de la serie') }}
+                    </x-slot>
+
+                    <x-slot name="description">
+                        {{ __('Aqui podeu modificar la vostra imatge') }}
+                    </x-slot>
+
+                    <x-slot name="form">
+                        <input type="file" id="image" name="image" accept="image/png, image/jpeg">
+                    </x-slot>
+
+                    <x-slot name="actions">
+                        <x-button>
+                            {{ __('Save') }}
+                        </x-button>
+                    </x-slot>
+                </x-form-section>
+
             @endcan
+
         </div>
     </div>
 
