@@ -141,6 +141,11 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/league/oauth1-client" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/paragonie/random_compat" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/phpseclib/phpseclib" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/laravel/cashier-paddle" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/moneyphp/money" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/spatie/macroable" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/spatie/url" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/polyfill-intl-icu" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
