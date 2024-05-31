@@ -128,6 +128,7 @@ if (! function_exists('create_user_manager_user')) {
         Permission::create(['name'=>'users_manage_index']);
         Permission::create(['name'=>'users_manage_create']);
         Permission::create(['name'=>'users_manage_destroy']);
+        Permission::create(['name'=>'users_manage_store']);
         Permission::create(['name'=>'users_manage_edit']);
         Permission::create(['name'=>'users_manage_update']);
         $user->givePermissionTo('users_manage_index');
