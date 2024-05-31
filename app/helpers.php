@@ -340,7 +340,7 @@ if (! function_exists('create_placeholder_series_image')) {
 if (! function_exists('create_sample_series')) {
     function create_sample_series()
     {
-        $path = Storage::disk('public')->putFile('series', new File(base_path('series_photos/0gSfr5mCbb5qLwoWdxS3gCrU0v1Xf8ny6TrgtNUe.png')));
+        $path = Storage::disk('public')->putFile('series', new File(base_path('series_photos/tdd.png')));
         $serie1 = Serie::create([
             'title' => 'TDD (Test Driven Development)',
             'description' => 'Bla bla bla',
