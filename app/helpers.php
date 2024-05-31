@@ -1,78 +1,23 @@
 <?php
 
-use App\Models\Team;
 use App\Models\Serie;
+use App\Models\Team;
 use App\Models\User;
 use App\Models\Video;
 use Carbon\Carbon;
+use Illuminate\Http\File;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Spatie\Permission\Models\Permission;
 
-if (! function_exists('create_sample_series')) {
-    function create_sample_series()
-    {
-        $serie1 = Serie::create([
-            'title' => 'TDD (Test Driven Development)',
-            'description' => 'Bla bla bla',
-            'image' => 'tdd.png',
-            'teacher_name' => 'Sergi Tur Badenas',
-            'teacher_photo_url' => 'https://www.gravatar.com/avatar/' . md5('sergiturbadenas@gmail.com')
-        ]);
-
-        sleep(1);
-        $serie2 = Serie::create([
-            'title' => 'Crud amb Vue i Laravel',
-            'description' => 'Bla bla bla',
-            'image' => 'crud_amb_vue_laravel.png',
-            'teacher_name' => 'Sergi Tur Badenas',
-            'teacher_photo_url' => 'https://www.gravatar.com/avatar/' . md5('sergiturbadenas@gmail.com')
-        ]);
-
-        sleep(1);
-
-        $serie3 = Serie::create([
-            'title' => 'ionic Real world',
-            'description' => 'Bla bla bla',
-            'image' => 'ionic_real_world.png',
-            'teacher_name' => 'Sergi Tur Badenas',
-            'teacher_photo_url' => 'https://www.gravatar.com/avatar/' . md5('sergiturbadenas@gmail.com')
-        ]);
-
-        return [$serie1,$serie2,$serie3];
-    }
-}
-
-if (! function_exists('create_sample_users')) {
-    function create_sample_users() {
-        $user1 = User::create([
-            'name' => 'User 1',
-            'email' => 'user1@prova.com',
-            'password' => Hash::make('12345678')
-        ]);
-        $user2 = User::create([
-            'name' => 'User 2',
-            'email' => 'user2@prova.com',
-            'password' => Hash::make('12345678')
-        ]);
-        $user3 = User::create([
-            'name' => 'User 3',
-            'email' => 'user3@prova.com',
-            'password' => Hash::make('12345678')
-        ]);
-
-        return [$user1, $user2, $user3];
-    }
-}
-
-
-if (! function_exists('create_default_user')){
+if (! function_exists('create_default_user')) {
     function create_default_user()
     {
         $user = User::create([
-            'name' => config('casteaching.default_user.name','Sergi Tur Bardenas'),
-            'email' => config('casteaching.default_user.email','sergiturbardenar@gmail.com') ,
-            'password' => Hash::make(config('casteaching.default_user.password', '12345678'))
+            'name' => config('casteaching.default_user.name', 'Sergi Tur Badenas'),
+            'email' => config('casteaching.default_user.email','sergiturbadenas@gmail.com'),
+            'password' => Hash::make(config('casteaching.default_user.password','12345678'))
         ]);
 
         $user->superadmin=true;
@@ -90,7 +35,7 @@ if (! function_exists('create_default_videos')){
         Video::create([
             'title' => 'Ubuntu 101',
             'description' => '# Here description',
-            'url' => 'https://youtu.be/w8j07_DBl_I',
+            'url' => 'https://www.youtube.com/embed/w8j07_DBl_I',
             'published_at' => Carbon::parse('December 13, 2020 8:00pm'),
             'previous' => null,
             'next' => null,
@@ -98,6 +43,7 @@ if (! function_exists('create_default_videos')){
         ]);
     }
 }
+
 if (! function_exists('create_regular_user')) {
     function create_regular_user()
     {
@@ -108,6 +54,7 @@ if (! function_exists('create_regular_user')) {
         ]);
 
         add_personal_team($user);
+
         return $user;
     }
 
@@ -129,16 +76,12 @@ if (! function_exists('create_superadmin_user')) {
     }
 }
 
-
-
 if (! function_exists('create_video_manager_user')) {
-
-    function create_video_manager_user()
-    {
+    function create_video_manager_user() {
         $user = User::create([
             'name' => 'VideosManager',
             'email' => 'videosmanager@casteaching.com',
-            'password' => Hash::make('12345678'),
+            'password' => Hash::make('12345678')
         ]);
         Permission::create(['name'=>'videos_manage_index']);
         Permission::create(['name'=>'series_manage_index']);
@@ -155,12 +98,12 @@ if (! function_exists('create_video_manager_user')) {
         Permission::create(['name'=>'videos_manage_destroy']);
         Permission::create(['name'=>'series_manage_destroy']);
         $user->givePermissionTo('videos_manage_index');
-        $user->givePermissionTo('videos_manage_create');
-        $user->givePermissionTo('videos_manage_destroy');
         $user->givePermissionTo('videos_manage_show');
+        $user->givePermissionTo('videos_manage_create');
+        $user->givePermissionTo('videos_manage_store');
+        $user->givePermissionTo('videos_manage_destroy');
         $user->givePermissionTo('videos_manage_edit');
         $user->givePermissionTo('videos_manage_update');
-        $user->givePermissionTo('videos_manage_store');
 
         $user->givePermissionTo('series_manage_index');
         $user->givePermissionTo('series_manage_create');
@@ -173,40 +116,52 @@ if (! function_exists('create_video_manager_user')) {
         add_personal_team($user);
         return $user;
     }
-
-
 }
-if (! function_exists('create_users_manager_user')) {
 
-    function create_users_manager_user()
-    {
+if (! function_exists('create_user_manager_user')) {
+    function create_user_manager_user() {
         $user = User::create([
             'name' => 'UsersManager',
             'email' => 'usersmanager@casteaching.com',
-            'password' => Hash::make('12345678'),
+            'password' => Hash::make('12345678')
         ]);
         Permission::create(['name'=>'users_manage_index']);
         Permission::create(['name'=>'users_manage_create']);
         Permission::create(['name'=>'users_manage_destroy']);
+        Permission::create(['name'=>'users_manage_store']);
         Permission::create(['name'=>'users_manage_edit']);
         Permission::create(['name'=>'users_manage_update']);
         $user->givePermissionTo('users_manage_index');
         $user->givePermissionTo('users_manage_create');
+        $user->givePermissionTo('users_manage_store');
         $user->givePermissionTo('users_manage_destroy');
         $user->givePermissionTo('users_manage_edit');
         $user->givePermissionTo('users_manage_update');
         add_personal_team($user);
         return $user;
     }
+}
 
 
+if (! function_exists('create_superadmin_user')) {
+    function create_superadmin_user() {
+        $user = User::create([
+            'name' => 'SuperAdmin',
+            'email' => 'superadmin@casteaching.com',
+            'password' => Hash::make('12345678')
+        ]);
+        $user->superadmin = true;
+        $user->save();
+
+        add_personal_team($user);
+
+        return $user;
+    }
 }
 
 if (! function_exists('add_personal_team')) {
-
     /**
      * @param $user
-     * @return void
      */
     function add_personal_team($user): void
     {
@@ -222,6 +177,7 @@ if (! function_exists('add_personal_team')) {
     }
 }
 
+
 if (! function_exists('define_gates')) {
     function define_gates(): void
     {
@@ -231,8 +187,10 @@ if (! function_exists('define_gates')) {
             }
         });
 
+
     }
 }
+
 if (! function_exists('create_permissions')) {
     function create_permissions(): void
     {
@@ -276,6 +234,28 @@ if (! function_exists('create_sample_videos')) {
         ]);
 
         return [$video1, $video2, $video3];
+    }
+}
+
+if (! function_exists('create_sample_users')) {
+    function create_sample_users() {
+        $user1 = User::create([
+            'name' => 'User 1',
+            'email' => 'user1@prova.com',
+            'password' => Hash::make('12345678')
+        ]);
+        $user2 = User::create([
+            'name' => 'User 2',
+            'email' => 'user2@prova.com',
+            'password' => Hash::make('12345678')
+        ]);
+        $user3 = User::create([
+            'name' => 'User 3',
+            'email' => 'user3@prova.com',
+            'password' => Hash::make('12345678')
+        ]);
+
+        return [$user1, $user2, $user3];
     }
 }
 
@@ -342,10 +322,63 @@ class DomainObject implements ArrayAccess, JsonSerializable
     }
 }
 
+
 if (! function_exists('objectify')) {
     function objectify($array){
         return new DomainObject($array);
     }
 }
 
+
+if (! function_exists('create_placeholder_series_image')) {
+    function create_placeholder_series_image()
+    {
+        return Storage::disk('public')->putFileAs('series', new File(base_path('/series_photos/placeholder.png')),'placeholder.png');
+    }
+}
+
+if (! function_exists('create_sample_series')) {
+    function create_sample_series()
+    {
+        $path = Storage::disk('public')->putFile('series', new File(base_path('series_photos/tdd.png')));
+        $serie1 = Serie::create([
+            'title' => 'TDD (Test Driven Development)',
+            'description' => 'Bla bla bla',
+            'image' => $path,
+            'teacher_name' => 'Sergi Tur Badenas',
+            'teacher_photo_url' => 'https://www.gravatar.com/avatar/' . md5('sergiturbadenas@gmail.com')
+        ]);
+
+        sleep(1);
+        $path = Storage::disk('public')->putFile('series', new File(base_path('series_photos/crud_amb_vue_laravel.png')));
+
+        $serie2 = Serie::create([
+            'title' => 'Crud amb Vue i Laravel',
+            'description' => 'Bla bla bla',
+            'image' => $path,
+            'teacher_name' => 'Sergi Tur Badenas',
+            'teacher_photo_url' => 'https://www.gravatar.com/avatar/' . md5('sergiturbadenas@gmail.com')
+        ]);
+
+        sleep(1);
+        $path = Storage::disk('public')->putFile('series', new File(base_path('series_photos/ionic_real_world.png')));
+
+        $serie3 = Serie::create([
+            'title' => 'ionic Real world',
+            'description' => 'Bla bla bla',
+            'image' => $path,
+            'teacher_name' => 'Sergi Tur Badenas',
+            'teacher_photo_url' => 'https://www.gravatar.com/avatar/' . md5('sergiturbadenas@gmail.com')
+        ]);
+
+        sleep(1);
+
+        $serie4 = Serie::create([
+            'title' => 'Serie TODO',
+            'description' => 'Bla bla bla',
+        ]);
+
+        return [$serie1,$serie2,$serie3,$serie4];
+    }
+}
 

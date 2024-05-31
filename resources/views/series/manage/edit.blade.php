@@ -78,6 +78,7 @@
 
                     <x-slot name="form">
                         <input type="file" id="image" name="image" accept="image/png, image/jpeg">
+                        <x-input-error for="image" class="mt-2"></x-input-error>
                     </x-slot>
 
                     <x-slot name="actions">
