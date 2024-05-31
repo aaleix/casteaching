@@ -124,6 +124,7 @@ if (! function_exists('create_superadmin_user')) {
        $user->superadmin = true;
        $user->save();
         add_personal_team($user);
+
        return $user;
     }
 }
@@ -140,12 +141,19 @@ if (! function_exists('create_video_manager_user')) {
             'password' => Hash::make('12345678'),
         ]);
         Permission::create(['name'=>'videos_manage_index']);
+        Permission::create(['name'=>'series_manage_index']);
         Permission::create(['name' => 'videos_manage_show']);
+        Permission::create(['name' => 'series_manage_show']);
         Permission::create(['name'=>'videos_manage_create']);
+        Permission::create(['name'=>'series_manage_create']);
         Permission::create(['name' => 'videos_manage_store']);
+        Permission::create(['name' => 'series_manage_store']);
         Permission::create(['name'=>'videos_manage_edit']);
+        Permission::create(['name'=>'series_manage_edit']);
         Permission::create(['name'=>'videos_manage_update']);
+        Permission::create(['name'=>'series_manage_update']);
         Permission::create(['name'=>'videos_manage_destroy']);
+        Permission::create(['name'=>'series_manage_destroy']);
         $user->givePermissionTo('videos_manage_index');
         $user->givePermissionTo('videos_manage_create');
         $user->givePermissionTo('videos_manage_destroy');
@@ -153,6 +161,15 @@ if (! function_exists('create_video_manager_user')) {
         $user->givePermissionTo('videos_manage_edit');
         $user->givePermissionTo('videos_manage_update');
         $user->givePermissionTo('videos_manage_store');
+
+        $user->givePermissionTo('series_manage_index');
+        $user->givePermissionTo('series_manage_create');
+        $user->givePermissionTo('series_manage_destroy');
+        $user->givePermissionTo('series_manage_show');
+        $user->givePermissionTo('series_manage_edit');
+        $user->givePermissionTo('series_manage_update');
+        $user->givePermissionTo('series_manage_store');
+
         add_personal_team($user);
         return $user;
     }
