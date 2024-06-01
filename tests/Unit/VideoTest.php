@@ -49,7 +49,7 @@ class VideoTest extends TestCase
         $serie = Serie::create([
             'title' => 'Apren TDD',
             'description' => 'Bla bla bla',
-            'image' => 'tdd.png',
+            'image' => '0gSfr5mCbb5qLwoWdxS3gCrU0v1Xf8ny6TrgtNUe.png',
             'teacher_name' => 'Sergi Tur Badenas',
             'teacher_photo_url' => 'https://www.gravatar.com/avatar/' . md5('sergiturbadenas@gmail.com'),
         ]);

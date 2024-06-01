@@ -44,5 +44,8 @@ class Video extends Model
         $this->save();
         return $this;
     }
-
+    public function canBeDisplayed()
+    {
+        return true;
+    }
 }
